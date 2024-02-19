@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+ <!-- Código do exercício do pássaro - Júlia Alves -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+    <title>Exercício do Pássaro - Julia Alves</title> 
+  
+   
+  <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+
+    var config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+
+        scene: {
+            preload: preload,
+            create: create,
+            update: update
+        }
+    };
+    
+    // Declara as variáveis 
+    var game = new Phaser.Game(config); 
+    var passarinho;
+    var passsarinho2;
+    
+    // Função que carrega as imagens dos assets
+    function preload() {
+        this.load.image('bg', 'assets/bg_space.png');
+        this.load.spritesheet('bird', 'assets/bird-red.png', { frameWidth: 75, frameHeight: 75 });
+        this.load.spritesheet('bird2', 'assets/bird-green.png', { frameWidth: 75, frameHeight: 75 });
+        this.load.image('inteli', 'assets/logo-inteli_branco.png');
+        
+    }
+    function create() { // Função que faz a renderização das imagens e define seus tamanhos
+
+        this.add.image(400, 300, 'bg').setScale(1.2);
+        this.add.image(690, 530, 'inteli').setScale(0.5);
+        passarinho = this.add.sprite(100, 50, 'bird').setScale(1.3);
+        passarinho2 = this.add.sprite(100, 50, 'bird2').setScale(1.3);
+
+        // Essa parte serve pra fazer as animações frame por frame do spreadsheet do pássaro vermelho que adicionamos 
+        this.anims.create({
+            key: 'fly',
+            frames: this.anims.generateFrameNumbers('bird', { start: 0, end: 7 }),
+            
+            frameRate: 10,
+            repeat: -1
+        });
+        
+        passarinho.anims.play('fly', true);
+       
+        //Essa parte serve pra fazer as animações frame por frame do spreadsheet do pássaro verde que adicionamos 
+
+        this.anims.create({
+            key: 'fly2',
+            frames: this.anims.generateFrameNumbers('bird2', { start: 0, end: 7 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        passarinho2.anims.play('fly2', true);
+    }
+
+    // Função pra atualizar as posições dos passarinhos 
+   function update() {
+    
+    // Condicionais Eixo x - passarinho vermelho e movimentações 
+        if (passarinho.x === 100) {
+            passarinho.setFlip(false, false);
+            passarinho.ida = true; }
+
+            if (passarinho.x < 750 && passarinho.ida === true) {
+            console.log("Passarinho vermelho está andando pra direita no eixo X (ida)");
+            passarinho.x += 5; }
+    
+        if (passarinho.x === 750) {
+            passarinho.setFlip(true, false);
+            passarinho.ida = false; }
+        
+        if (passarinho.x > 100 && passarinho.ida === false) {
+            console.log("Passarinho vermelho está andando pra esquerda no eixo X (volta)");
+            passarinho.x -= 5; }      
+
+    // Condicionais Eixo y - passarinho vermelho e movimentações
+        if (passarinho.y === 50) {
+            passarinho.setFlip(false, false);
+            passarinho.subindo = true; }
+
+        if (passarinho.y < 550 && passarinho.subindo === true) {
+            console.log("Passarinho vermelho está andando pra cima no eixo Y");
+            passarinho.y += 1; }
+        
+        if (passarinho.y === 550) {
+            passarinho.setFlip(true, false);
+            passarinho.subindo = false; }
+
+        if (passarinho.y > 50 && passarinho.subindo === false) {
+            console.log("Passarinho vermelho está andando pra baixo no eixo Y");
+            passarinho.y -= 1; }
+
+        //Movimentações do passarinho verde e condicionais eixo x 
+    
+      if (passarinho2.x === 100) {
+            passarinho2.setFlip(false, false);
+            passarinho2.ida = true;
+        }
+        if (passarinho2.x < 700 && passarinho2.ida === true) {
+            console.log("Passarinho verde está andando pra direita no eixo X (ida)");
+            passarinho2.x += 5;
+        }
+        if (passarinho2.x === 700) {
+            passarinho2.setFlip(true, false);
+            passarinho2.ida = false;
+        }
+        if (passarinho2.x > 100 && passarinho2.ida === false) {
+            console.log("Passarinho verde está andando pra esquerda no eixo X (volta)");
+            passarinho2.x -= 5;
+        }   
+
+          //Movimentações do passarinho verde e condicionais eixo y 
+        if (passarinho2.y === 50) {
+            passarinho2.setFlip(false, false);
+            passarinho2.eixoy = true;
+        }
+        if (passarinho2.y < 550 && passarinho2.eixoy === true) {
+            console.log("Passarinho verde está andando pra cima no eixo Y");
+            passarinho2.y += 5;
+        
+        }
+        if (passarinho2.y === 550) {
+            passarinho2.setFlip(true, false);
+            passarinho2.eixoy = false;
+         
+        }
+        if (passarinho2.y > 50 && passarinho2.eixoy === false) {
+            console.log("Passarinho verde está andando pra baixo no eixo Y");
+            passarinho2.y -= 5;
+        }   
+    }
+
+</script>
+
+</body>
+</html>
